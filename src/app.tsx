@@ -1,14 +1,19 @@
-import { Actions } from './components/actions'
 import { Canvas } from './components/canvas'
+import { DisplayList } from './components/display-list'
+import { Toolbar } from './components/toolbar'
 import { CanvasContextProvider } from './contexts/canvas-context'
 
 export function App() {
   return (
     <CanvasContextProvider>
-      <div className="p-4 flex flex-col gap-4">
-        <Actions />
+      <div className="flex flex-col w-full h-[100dvh] overflow-hidden">
+        <Toolbar />
 
-        <Canvas />
+        <div className="grid grid-cols-[280px_1fr] flex-1">
+          <DisplayList />
+
+          <Canvas />
+        </div>
       </div>
     </CanvasContextProvider>
   )

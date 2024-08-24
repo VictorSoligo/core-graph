@@ -1,7 +1,7 @@
 import { Coord } from '../@types/coord'
 import { Shape, ShapeConfig } from './shape'
 
-export class Point implements Shape {
+export class Dot implements Shape {
   name: string
   coord: Coord
   config: ShapeConfig

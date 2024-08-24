@@ -38,9 +38,7 @@ export function CanvasContextProvider({
       return
     }
 
-    const newShapes = displayList.toSpliced(shapeIndex, 1)
-
-    setDisplayList(newShapes)
+    setDisplayList((state) => state.toSpliced(shapeIndex, 1))
   }
 
   function clearDisplayList() {
