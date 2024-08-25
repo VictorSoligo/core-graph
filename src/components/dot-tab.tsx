@@ -1,4 +1,4 @@
-import { useCanvas } from '@/contexts/canvas-context'
+import { useDisplayList } from '@/contexts/display-list-context'
 import { Dot } from '@/models/dot'
 import { FormEvent, useState } from 'react'
 import { AddShapeButton } from './add-shape-button'
@@ -14,7 +14,7 @@ export function DotTab({ onClose }: DotTabProps) {
   const [x, setX] = useState('')
   const [y, setY] = useState('')
 
-  const { addShapeToDisplayList } = useCanvas()
+  const { addShapeToDisplayList } = useDisplayList()
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()

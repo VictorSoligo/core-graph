@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { Shape } from '../models/shape'
 
-interface CanvasContextData {
+interface DisplayListContextData {
   canvasRef: RefObject<HTMLCanvasElement>
   displayList: Shape[]
   clearDisplayList: () => void
@@ -17,17 +17,20 @@ interface CanvasContextData {
   removeShapeFromDisplayList: (shapeIndex: number) => void
 }
 
-interface CanvasContextProviderProps {
+interface DisplayListContextProviderProps {
   children: ReactNode
 }
 
-const CanvasContext = createContext({} as CanvasContextData)
+const DisplayListContext = createContext({} as DisplayListContextData)
 
-export function CanvasContextProvider({
+export function DisplayListContextProvider({
   children,
-}: CanvasContextProviderProps) {
+}: DisplayListContextProviderProps) {
   const [displayList, setDisplayList] = useState<Shape[]>([])
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const canvasWidth = canvasRef.current?.width ?? 0
+  const canvasHeight = canvasRef.current?.height ?? 0
 
   function addShapeToDisplayList(shape: Shape) {
     setDisplayList((state) => [...state, shape])
@@ -60,11 +63,12 @@ export function CanvasContextProvider({
       return
     }
 
-    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
-    displayList.forEach((shape) => {
-      shape.draw(ctx)
-    })
+    ctx.translate(canvasWidth / 2, canvasHeight / 2)
+
+    displayList.forEach((shape) => shape.draw(ctx))
   }
 
   useEffect(() => {
@@ -72,7 +76,7 @@ export function CanvasContextProvider({
   }, [displayList]) // eslint-disable-line
 
   return (
-    <CanvasContext.Provider
+    <DisplayListContext.Provider
       value={{
         canvasRef,
         displayList,
@@ -82,10 +86,10 @@ export function CanvasContextProvider({
       }}
     >
       {children}
-    </CanvasContext.Provider>
+    </DisplayListContext.Provider>
   )
 }
 
-export function useCanvas() {
-  return useContext(CanvasContext)
+export function useDisplayList() {
+  return useContext(DisplayListContext)
 }

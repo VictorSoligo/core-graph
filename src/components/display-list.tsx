@@ -1,8 +1,8 @@
-import { useCanvas } from '@/contexts/canvas-context'
+import { useDisplayList } from '@/contexts/display-list-context'
 import { ShapeCard } from './shape-card'
 
 export function DisplayList() {
-  const { displayList, removeShapeFromDisplayList } = useCanvas()
+  const { displayList, removeShapeFromDisplayList } = useDisplayList()
 
   return (
     <div className="bg-white border-r-2 flex flex-col overflow-y-auto">

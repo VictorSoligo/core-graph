@@ -1,4 +1,4 @@
-import { useCanvas } from '@/contexts/canvas-context'
+import { useDisplayList } from '@/contexts/display-list-context'
 import { Line } from '@/models/line'
 import { FormEvent, useState } from 'react'
 import { AddShapeButton } from './add-shape-button'
@@ -16,7 +16,7 @@ export function LineTab({ onClose }: LineTabProps) {
   const [toX, setToX] = useState('')
   const [toY, setToY] = useState('')
 
-  const { addShapeToDisplayList } = useCanvas()
+  const { addShapeToDisplayList } = useDisplayList()
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()

@@ -1,11 +1,11 @@
 import { Canvas } from './components/canvas'
 import { DisplayList } from './components/display-list'
 import { Toolbar } from './components/toolbar'
-import { CanvasContextProvider } from './contexts/canvas-context'
+import { DisplayListContextProvider } from './contexts/display-list-context'
 
 export function App() {
   return (
-    <CanvasContextProvider>
+    <DisplayListContextProvider>
       <div className="flex flex-col w-full h-[100dvh] overflow-hidden">
         <Toolbar />
 
@@ -15,6 +15,6 @@ export function App() {
           <Canvas />
         </div>
       </div>
-    </CanvasContextProvider>
+    </DisplayListContextProvider>
   )
 }
