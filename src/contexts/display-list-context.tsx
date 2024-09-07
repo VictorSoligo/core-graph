@@ -63,10 +63,13 @@ export function DisplayListContextProvider({
       return
     }
 
+    // limpa o canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
+    // transforma em plano cartesiano
     ctx.translate(canvasWidth / 2, canvasHeight / 2)
+    ctx.scale(1, -1)
 
     displayList.forEach((shape) => shape.draw(ctx))
   }
