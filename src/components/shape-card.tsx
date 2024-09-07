@@ -11,6 +11,7 @@ import { Dot } from '@/models/dot'
 import { Line } from '@/models/line'
 import { ShapeCardDetails } from './shape-card-details'
 import { Polygon } from '@/models/polygon'
+import { Polyline } from '@/models/polyline'
 
 interface ShapeCardProps {
   shape: ShapeModel
@@ -20,7 +21,7 @@ interface ShapeCardProps {
 export function ShapeCard({ shape, onRemove }: ShapeCardProps) {
   return (
     <li className="flex items-center justify-between p-4 border-b-2 hover:bg-zinc-50 transition-colors gap-x-2">
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 gap-1">
         <span
           className="font-semibold text-md break-all line-clamp-1"
           title={shape.name}
@@ -39,6 +40,14 @@ export function ShapeCard({ shape, onRemove }: ShapeCardProps) {
         )}
 
         {shape instanceof Polygon && (
+          <ShapeCardDetails
+            text={shape.vertices
+              .map((vertex) => `[${vertex.x} ; ${vertex.y}]`)
+              .join(' -> ')}
+          />
+        )}
+
+        {shape instanceof Polyline && (
           <ShapeCardDetails
             text={shape.vertices
               .map((vertex) => `[${vertex.x} ; ${vertex.y}]`)

@@ -1,7 +1,7 @@
 import { Coord } from '@/@types/coord'
 import { Shape, ShapeConfig } from './shape'
 
-export class Polygon implements Shape {
+export class Polyline implements Shape {
   name: string
   vertices: Coord[]
   config: ShapeConfig
@@ -25,7 +25,6 @@ export class Polygon implements Shape {
     ctx.moveTo(this.vertices[0].x, this.vertices[0].y)
     this.vertices.forEach((vertex) => ctx.lineTo(vertex.x, vertex.y))
 
-    ctx.closePath()
     ctx.stroke()
   }
 }

@@ -1,5 +1,5 @@
 import { useDisplayList } from '@/contexts/display-list-context'
-import { Polygon } from '@/models/polygon'
+import { Polyline } from '@/models/polyline'
 import { Plus, Trash } from 'lucide-react'
 import { FormEvent, useState } from 'react'
 import { AddShapeButton } from './add-shape-button'
@@ -9,11 +9,11 @@ import { DialogFooter } from './ui/dialog'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 
-interface PolygonTabProps {
+interface PolylineTabProps {
   onClose: () => void
 }
 
-export function PolygonTab({ onClose }: PolygonTabProps) {
+export function PolylineTab({ onClose }: PolylineTabProps) {
   const [name, setName] = useState('')
   const [vertices, setVertices] = useState<{ x: string; y: string }[]>([
     { x: '', y: '' },
@@ -38,7 +38,7 @@ export function PolygonTab({ onClose }: PolygonTabProps) {
       return
     }
 
-    const polygon = new Polygon(
+    const polyline = new Polyline(
       name,
       vertices.map((vertex) => {
         return { x: Number(vertex.x), y: Number(vertex.y) }
@@ -46,7 +46,7 @@ export function PolygonTab({ onClose }: PolygonTabProps) {
       { width: 1, color: '#000' },
     )
 
-    addShapeToDisplayList(polygon)
+    addShapeToDisplayList(polyline)
     onClose()
   }
 

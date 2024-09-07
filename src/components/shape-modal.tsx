@@ -1,6 +1,7 @@
 import { DotTab } from './dot-tab'
 import { LineTab } from './line-tab'
 import { PolygonTab } from './polygon-tab'
+import { PolylineTab } from './polyline-tab'
 import { Dialog, DialogContent } from './ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 
@@ -21,6 +22,7 @@ export function ShapeModal({ isOpen, onOpenChange }: ShapeModalProps) {
           <TabsList>
             <TabsTrigger value="dot">Ponto</TabsTrigger>
             <TabsTrigger value="line">Linha</TabsTrigger>
+            <TabsTrigger value="polyline">Polilinha</TabsTrigger>
             <TabsTrigger value="polygon">Polígono</TabsTrigger>
           </TabsList>
 
@@ -34,6 +36,10 @@ export function ShapeModal({ isOpen, onOpenChange }: ShapeModalProps) {
 
           <TabsContent value="polygon">
             <PolygonTab onClose={handleClose} />
+          </TabsContent>
+
+          <TabsContent value="polyline">
+            <PolylineTab onClose={handleClose} />
           </TabsContent>
         </Tabs>
       </DialogContent>
