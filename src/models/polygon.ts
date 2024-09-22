@@ -1,5 +1,7 @@
 import { Coord } from '@/@types/coord'
 import { Shape, ShapeConfig } from './shape'
+import { Viewport } from './viewport'
+import { transformToViewport } from '@/logic/transform-to-viewport'
 
 export class Polygon implements Shape {
   name: string
@@ -12,18 +14,33 @@ export class Polygon implements Shape {
     this.config = config ?? { color: '#000', width: 1 }
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {
     if (this.vertices.length < 3) {
       return
     }
+
+    const { x: initialX, y: initialY } = transformToViewport({
+      worldX: this.vertices[0].x,
+      worldY: this.vertices[0].y,
+      viewport,
+    })
 
     ctx.strokeStyle = this.config.color
     ctx.lineWidth = this.config.width
 
     ctx.beginPath()
 
-    ctx.moveTo(this.vertices[0].x, this.vertices[0].y)
-    this.vertices.forEach((vertex) => ctx.lineTo(vertex.x, vertex.y))
+    ctx.moveTo(initialX, initialY)
+
+    this.vertices.forEach((vertex) => {
+      const { x, y } = transformToViewport({
+        worldX: vertex.x,
+        worldY: vertex.y,
+        viewport,
+      })
+
+      ctx.lineTo(x, y)
+    })
 
     ctx.closePath()
     ctx.stroke()

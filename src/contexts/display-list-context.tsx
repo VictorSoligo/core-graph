@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react'
 import { Shape } from '../models/shape'
+import { Viewport } from '@/models/viewport'
 
 interface DisplayListContextData {
   canvasRef: RefObject<HTMLCanvasElement>
@@ -15,6 +16,8 @@ interface DisplayListContextData {
   clearDisplayList: () => void
   addShapeToDisplayList: (shape: Shape) => void
   removeShapeFromDisplayList: (shapeIndex: number) => void
+  zoomIn: () => void
+  zoomOut: () => void
 }
 
 interface DisplayListContextProviderProps {
@@ -27,6 +30,8 @@ export function DisplayListContextProvider({
   children,
 }: DisplayListContextProviderProps) {
   const [displayList, setDisplayList] = useState<Shape[]>([])
+  const [zoom, setZoom] = useState(1)
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const canvasWidth = canvasRef.current?.width ?? 0
@@ -42,6 +47,14 @@ export function DisplayListContextProvider({
     }
 
     setDisplayList((state) => state.toSpliced(shapeIndex, 1))
+  }
+
+  function zoomIn() {
+    setZoom((prevZoom) => prevZoom * 1.2)
+  }
+
+  function zoomOut() {
+    setZoom((prevZoom) => prevZoom / 1.2)
   }
 
   function clearDisplayList() {
@@ -63,20 +76,20 @@ export function DisplayListContextProvider({
       return
     }
 
-    // limpa o canvas
-    ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
-    // transforma em plano cartesiano
-    ctx.translate(canvasWidth / 2, canvasHeight / 2)
-    ctx.scale(1, -1)
+    const viewport: Viewport = {
+      height: canvasHeight,
+      width: canvasWidth,
+      zoom,
+    }
 
-    displayList.forEach((shape) => shape.draw(ctx))
+    displayList.forEach((shape) => shape.draw(ctx, viewport))
   }
 
   useEffect(() => {
     drawDisplayList()
-  }, [displayList]) // eslint-disable-line
+  }, [displayList, zoom]) // eslint-disable-line
 
   return (
     <DisplayListContext.Provider
@@ -86,6 +99,8 @@ export function DisplayListContextProvider({
         removeShapeFromDisplayList,
         addShapeToDisplayList,
         clearDisplayList,
+        zoomIn,
+        zoomOut,
       }}
     >
       {children}

@@ -17,7 +17,7 @@ import { Button } from './ui/button'
 export function Toolbar() {
   const [isShapeModalOpen, setIsShapeModalOpen] = useState(false)
 
-  const { clearDisplayList } = useDisplayList()
+  const { clearDisplayList, zoomIn, zoomOut } = useDisplayList()
 
   function handleOpenShapeModal() {
     setIsShapeModalOpen(true)
@@ -53,11 +53,11 @@ export function Toolbar() {
         <ToolbarSeparator />
 
         <div className="flex gap-2">
-          <Button size="icon" variant="secondary">
+          <Button size="icon" variant="secondary" onClick={zoomOut}>
             <ZoomOut className="size-5" />
           </Button>
 
-          <Button size="icon" variant="secondary">
+          <Button size="icon" variant="secondary" onClick={zoomIn}>
             <ZoomIn className="size-5" />
           </Button>
         </div>
