@@ -11,10 +11,10 @@ export function transformToViewport({
   worldY,
   viewport,
 }: TransformToViewportParams) {
-  const { height, width, zoom } = viewport
+  const { height, width, zoom, offset } = viewport
 
-  const viewportX = worldX * zoom + width / 2
-  const viewportY = -worldY * zoom + height / 2
+  const viewportX = worldX * zoom + width / 2 + offset.x
+  const viewportY = -worldY * zoom + height / 2 + offset.y
 
   return { x: viewportX, y: viewportY }
 }

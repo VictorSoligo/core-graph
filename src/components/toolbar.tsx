@@ -17,7 +17,15 @@ import { Button } from './ui/button'
 export function Toolbar() {
   const [isShapeModalOpen, setIsShapeModalOpen] = useState(false)
 
-  const { clearDisplayList, zoomIn, zoomOut } = useDisplayList()
+  const {
+    clearDisplayList,
+    zoomIn,
+    zoomOut,
+    moveDown,
+    moveLeft,
+    moveRight,
+    moveUp,
+  } = useDisplayList()
 
   function handleOpenShapeModal() {
     setIsShapeModalOpen(true)
@@ -25,7 +33,7 @@ export function Toolbar() {
 
   return (
     <>
-      <header className="h-[72px] px-4 w-full flex gap-4 items-center bg-white border-b-2">
+      <header className="min-h-[72px] px-4 w-full flex gap-4 items-center bg-white border-b-2">
         <Button size="icon" onClick={handleOpenShapeModal}>
           <Plus className="size-5 text-white" />
         </Button>
@@ -33,19 +41,19 @@ export function Toolbar() {
         <ToolbarSeparator />
 
         <div className="flex gap-2">
-          <Button size="icon" variant="secondary">
+          <Button size="icon" variant="secondary" onClick={moveLeft}>
             <MoveLeft className="size-5" />
           </Button>
 
-          <Button size="icon" variant="secondary">
+          <Button size="icon" variant="secondary" onClick={moveRight}>
             <MoveRight className="size-5" />
           </Button>
 
-          <Button size="icon" variant="secondary">
+          <Button size="icon" variant="secondary" onClick={moveUp}>
             <MoveUp className="size-5" />
           </Button>
 
-          <Button size="icon" variant="secondary">
+          <Button size="icon" variant="secondary" onClick={moveDown}>
             <MoveDown className="size-5" />
           </Button>
         </div>
