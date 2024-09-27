@@ -29,6 +29,7 @@ export function LineTab({ onClose }: LineTabProps) {
       name,
       { x: Number(fromX), y: Number(fromY) },
       { x: Number(toX), y: Number(toY) },
+      0,
       { width: 5, color: '#000' },
     )
 

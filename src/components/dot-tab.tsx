@@ -23,11 +23,10 @@ export function DotTab({ onClose }: DotTabProps) {
       return
     }
 
-    const dot = new Dot(
-      name,
-      { x: Number(x), y: Number(y) },
-      { width: 5, color: '#000' },
-    )
+    const dot = new Dot(name, { x: Number(x), y: Number(y) }, 0, {
+      width: 5,
+      color: '#000',
+    })
 
     addShapeToDisplayList(dot)
     onClose()

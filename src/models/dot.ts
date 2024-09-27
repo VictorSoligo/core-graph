@@ -6,12 +6,23 @@ import { Viewport } from './viewport'
 export class Dot implements Shape {
   name: string
   coord: Coord
+  rotationAngle: number
   config: ShapeConfig
 
-  constructor(name: string, coord: Coord, config?: ShapeConfig) {
+  constructor(
+    name: string,
+    coord: Coord,
+    rotationAngle: number,
+    config?: ShapeConfig,
+  ) {
     this.name = name
     this.coord = coord
+    this.rotationAngle = rotationAngle
     this.config = config ?? { color: '#000', width: 1 }
+  }
+
+  rotate(degrees: number) {
+    this.rotationAngle = degrees
   }
 
   draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {
@@ -20,6 +31,7 @@ export class Dot implements Shape {
     const { x, y } = transformToViewport({
       worldX: this.coord.x,
       worldY: this.coord.y,
+      rotationAngle: this.rotationAngle,
       viewport,
     })
 

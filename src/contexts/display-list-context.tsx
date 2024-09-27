@@ -16,6 +16,7 @@ interface DisplayListContextData {
   clearDisplayList: () => void
   addShapeToDisplayList: (shape: Shape) => void
   removeShapeFromDisplayList: (shapeIndex: number) => void
+  editShapeFromDisplayList: (shapeIndex: number, shape: Shape) => void
   zoomIn: () => void
   zoomOut: () => void
   moveRight: () => void
@@ -35,9 +36,12 @@ export function DisplayListContextProvider({
 }: DisplayListContextProviderProps) {
   const [displayList, setDisplayList] = useState<Shape[]>([])
 
-  const [zoom, setZoom] = useState(1)
-  const [offsetX, setOffsetX] = useState<number>(0)
-  const [offsetY, setOffsetY] = useState<number>(0)
+  const defaultZoom = 1
+  const defaultOffset = 0
+
+  const [zoom, setZoom] = useState(defaultZoom)
+  const [offsetX, setOffsetX] = useState<number>(defaultOffset)
+  const [offsetY, setOffsetY] = useState<number>(defaultOffset)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -57,6 +61,14 @@ export function DisplayListContextProvider({
     }
 
     setDisplayList((state) => state.toSpliced(shapeIndex, 1))
+  }
+
+  function editShapeFromDisplayList(shapeIndex: number, shape: Shape) {
+    const newDisplayList = [...displayList]
+
+    newDisplayList[shapeIndex] = shape
+
+    setDisplayList(newDisplayList)
   }
 
   function zoomIn() {
@@ -93,8 +105,14 @@ export function DisplayListContextProvider({
       return
     }
 
+    setZoom(defaultZoom)
+    setOffsetX(defaultOffset)
+    setOffsetY(defaultOffset)
+
     setDisplayList([])
   }
+
+  console.log(displayList)
 
   function drawDisplayList() {
     if (!canvasRef.current) {
@@ -133,6 +151,7 @@ export function DisplayListContextProvider({
         displayList,
         removeShapeFromDisplayList,
         addShapeToDisplayList,
+        editShapeFromDisplayList,
         clearDisplayList,
         zoomIn,
         zoomOut,

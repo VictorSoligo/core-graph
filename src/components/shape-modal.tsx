@@ -2,7 +2,7 @@ import { DotTab } from './dot-tab'
 import { LineTab } from './line-tab'
 import { PolygonTab } from './polygon-tab'
 import { PolylineTab } from './polyline-tab'
-import { Dialog, DialogContent } from './ui/dialog'
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 
 interface ShapeModalProps {
@@ -18,6 +18,8 @@ export function ShapeModal({ isOpen, onOpenChange }: ShapeModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
+        <DialogTitle>Novo objeto</DialogTitle>
+
         <Tabs defaultValue="dot">
           <TabsList>
             <TabsTrigger value="dot">Ponto</TabsTrigger>

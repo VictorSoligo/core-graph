@@ -11,6 +11,7 @@ export function DisplayList() {
           <ShapeCard
             key={shape.name}
             shape={shape}
+            shapeIndex={index}
             onRemove={() => {
               removeShapeFromDisplayList(index)
             }}

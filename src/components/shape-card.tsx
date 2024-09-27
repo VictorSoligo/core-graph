@@ -12,13 +12,22 @@ import { Line } from '@/models/line'
 import { ShapeCardDetails } from './shape-card-details'
 import { Polygon } from '@/models/polygon'
 import { Polyline } from '@/models/polyline'
+import { EditShapeModal } from './edit-shape-modal'
+import { useState } from 'react'
 
 interface ShapeCardProps {
   shape: ShapeModel
+  shapeIndex: number
   onRemove: () => void
 }
 
-export function ShapeCard({ shape, onRemove }: ShapeCardProps) {
+export function ShapeCard({ shape, shapeIndex, onRemove }: ShapeCardProps) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
+  function handleOpenEditShapeModal() {
+    setIsEditModalOpen(true)
+  }
+
   return (
     <li className="flex items-center justify-between p-4 border-b-2 hover:bg-zinc-50 transition-colors gap-x-2">
       <div className="flex flex-col flex-1 gap-1">
@@ -64,9 +73,20 @@ export function ShapeCard({ shape, onRemove }: ShapeCardProps) {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent>
+          <DropdownMenuItem onClick={handleOpenEditShapeModal}>
+            Editar
+          </DropdownMenuItem>
+
           <DropdownMenuItem onClick={onRemove}>Remover</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <EditShapeModal
+        shape={shape}
+        shapeIndex={shapeIndex}
+        isOpen={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+      />
     </li>
   )
 }
