@@ -19,7 +19,7 @@ export function EditShapeModal({
   onOpenChange,
   shape,
 }: EditShapeModalProps) {
-  const [rotationAngle, setRotationAngle] = useState(shape.rotationAngle)
+  const [rotationAngle, setRotationAngle] = useState(0)
 
   const { editShapeFromDisplayList } = useDisplayList()
 

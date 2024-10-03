@@ -112,8 +112,6 @@ export function DisplayListContextProvider({
     setDisplayList([])
   }
 
-  console.log(displayList)
-
   function drawDisplayList() {
     if (!canvasRef.current) {
       return

@@ -2,27 +2,25 @@ import { Coord } from '@/@types/coord'
 import { Shape, ShapeConfig } from './shape'
 import { Viewport } from './viewport'
 import { transformToViewport } from '@/logic/transform-to-viewport'
+import { rotate } from '@/logic/rotate'
 
 export class Polygon implements Shape {
   name: string
   vertices: Coord[]
-  rotationAngle: number
   config: ShapeConfig
 
-  constructor(
-    name: string,
-    vertices: Coord[],
-    rotationAngle: number,
-    config?: ShapeConfig,
-  ) {
+  constructor(name: string, vertices: Coord[], config?: ShapeConfig) {
     this.name = name
     this.vertices = vertices
-    this.rotationAngle = rotationAngle
     this.config = config ?? { color: '#000', width: 1 }
   }
 
   rotate(degrees: number) {
-    this.rotationAngle = degrees
+    const vertices = this.vertices.map((vertex) => {
+      return rotate({ degrees, worldX: vertex.x, worldY: vertex.y })
+    })
+
+    this.vertices = vertices
   }
 
   draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {
@@ -33,7 +31,6 @@ export class Polygon implements Shape {
     const { x: initialX, y: initialY } = transformToViewport({
       worldX: this.vertices[0].x,
       worldY: this.vertices[0].y,
-      rotationAngle: this.rotationAngle,
       viewport,
     })
 
@@ -48,7 +45,6 @@ export class Polygon implements Shape {
       const { x, y } = transformToViewport({
         worldX: vertex.x,
         worldY: vertex.y,
-        rotationAngle: this.rotationAngle,
         viewport,
       })
 

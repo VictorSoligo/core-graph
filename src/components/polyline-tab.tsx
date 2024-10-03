@@ -43,7 +43,6 @@ export function PolylineTab({ onClose }: PolylineTabProps) {
       vertices.map((vertex) => {
         return { x: Number(vertex.x), y: Number(vertex.y) }
       }),
-      0,
       { width: 1, color: '#000' },
     )
 

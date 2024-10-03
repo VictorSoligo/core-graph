@@ -43,7 +43,6 @@ export function PolygonTab({ onClose }: PolygonTabProps) {
       vertices.map((vertex) => {
         return { x: Number(vertex.x), y: Number(vertex.y) }
       }),
-      0,
       { width: 1, color: '#000' },
     )
 

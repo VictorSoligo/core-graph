@@ -7,7 +7,6 @@ export type ShapeConfig = {
 
 export abstract class Shape {
   abstract name: string
-  abstract rotationAngle: number
   abstract config: ShapeConfig
 
   abstract rotate(deg: number): void
