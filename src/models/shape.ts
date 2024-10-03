@@ -9,7 +9,8 @@ export abstract class Shape {
   abstract name: string
   abstract config: ShapeConfig
 
-  abstract rotate(deg: number): void
+  abstract rotate(degrees: number): void
+  abstract translate(dx: number, dy: number): void
 
   abstract draw(ctx: CanvasRenderingContext2D, viewport: Viewport): void
 }

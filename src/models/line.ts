@@ -3,6 +3,7 @@ import { Coord } from '../@types/coord'
 import { Shape, ShapeConfig } from './shape'
 import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
+import { translate } from '@/logic/translate'
 
 export class Line implements Shape {
   name: string
@@ -20,6 +21,11 @@ export class Line implements Shape {
   rotate(degrees: number) {
     this.to = rotate({ degrees, worldX: this.to.x, worldY: this.to.y })
     this.from = rotate({ degrees, worldX: this.from.x, worldY: this.from.y })
+  }
+
+  translate(dx: number, dy: number): void {
+    this.to = translate({ dx, dy, worldX: this.to.x, worldY: this.to.y })
+    this.from = translate({ dx, dy, worldX: this.from.x, worldY: this.from.y })
   }
 
   draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {

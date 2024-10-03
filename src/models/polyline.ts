@@ -3,6 +3,7 @@ import { Shape, ShapeConfig } from './shape'
 import { transformToViewport } from '@/logic/transform-to-viewport'
 import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
+import { translate } from '@/logic/translate'
 
 export class Polyline implements Shape {
   name: string
@@ -18,6 +19,14 @@ export class Polyline implements Shape {
   rotate(degrees: number) {
     const vertices = this.vertices.map((vertex) => {
       return rotate({ degrees, worldX: vertex.x, worldY: vertex.y })
+    })
+
+    this.vertices = vertices
+  }
+
+  translate(dx: number, dy: number): void {
+    const vertices = this.vertices.map((vertex) => {
+      return translate({ dx, dy, worldX: vertex.x, worldY: vertex.y })
     })
 
     this.vertices = vertices

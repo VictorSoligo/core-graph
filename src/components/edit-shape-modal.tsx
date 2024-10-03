@@ -5,6 +5,7 @@ import { Button } from './ui/button'
 import { FormEvent, useState } from 'react'
 import { Label } from './ui/label'
 import { useDisplayList } from '@/contexts/display-list-context'
+import { InputWithLabel } from './input-with-label'
 
 interface EditShapeModalProps {
   shape: Shape
@@ -20,6 +21,8 @@ export function EditShapeModal({
   shape,
 }: EditShapeModalProps) {
   const [rotationAngle, setRotationAngle] = useState(0)
+  const [dx, setDx] = useState(0)
+  const [dy, setDy] = useState(0)
 
   const { editShapeFromDisplayList } = useDisplayList()
 
@@ -31,6 +34,7 @@ export function EditShapeModal({
     event.preventDefault()
 
     shape.rotate(rotationAngle)
+    shape.translate(dx, dy)
 
     editShapeFromDisplayList(shapeIndex, shape)
 
@@ -43,7 +47,31 @@ export function EditShapeModal({
         <form onSubmit={handleSubmit}>
           <DialogTitle>Editar objeto {shape.name}</DialogTitle>
 
-          <div className="mt-4">
+          <div className="mt-4 gap-4 flex flex-col">
+            <div className="space-y-1.5">
+              <Label>Translação</Label>
+
+              <div className="grid grid-cols-2 gap-4">
+                <InputWithLabel
+                  label="Dx"
+                  id="dx"
+                  placeholder="Dx"
+                  type="number"
+                  value={dx}
+                  onChange={(e) => setDx(Number(e.target.value))}
+                />
+
+                <InputWithLabel
+                  label="Dy"
+                  id="dy"
+                  placeholder="Dy"
+                  type="number"
+                  value={dy}
+                  onChange={(e) => setDy(Number(e.target.value))}
+                />
+              </div>
+            </div>
+
             <div className="space-y-1.5">
               <Label>Rotação</Label>
 

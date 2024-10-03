@@ -3,6 +3,7 @@ import { Coord } from '../@types/coord'
 import { Shape, ShapeConfig } from './shape'
 import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
+import { translate } from '@/logic/translate'
 
 export class Dot implements Shape {
   name: string
@@ -19,6 +20,15 @@ export class Dot implements Shape {
     this.coord = rotate({ degrees, worldX: this.coord.x, worldY: this.coord.y })
   }
 
+  translate(dx: number, dy: number) {
+    this.coord = translate({
+      dx,
+      dy,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+    })
+  }
+
   draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {
     ctx.fillStyle = this.config.color
 
@@ -27,8 +37,6 @@ export class Dot implements Shape {
       worldY: this.coord.y,
       viewport,
     })
-
-    console.log({ x, y })
 
     ctx.beginPath()
     ctx.arc(x, y, this.config.width, 0, 2 * Math.PI)
