@@ -4,6 +4,7 @@ import { Shape, ShapeConfig } from './shape'
 import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
+import { scale } from '@/logic/scale'
 
 export class Line implements Shape {
   name: string
@@ -23,9 +24,14 @@ export class Line implements Shape {
     this.from = rotate({ degrees, worldX: this.from.x, worldY: this.from.y })
   }
 
-  translate(dx: number, dy: number): void {
+  translate(dx: number, dy: number) {
     this.to = translate({ dx, dy, worldX: this.to.x, worldY: this.to.y })
     this.from = translate({ dx, dy, worldX: this.from.x, worldY: this.from.y })
+  }
+
+  scale(sx: number, sy: number) {
+    this.to = scale({ sx, sy, worldX: this.to.x, worldY: this.to.y })
+    this.from = scale({ sx, sy, worldX: this.from.x, worldY: this.from.y })
   }
 
   draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {

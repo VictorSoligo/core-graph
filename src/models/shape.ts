@@ -11,6 +11,7 @@ export abstract class Shape {
 
   abstract rotate(degrees: number): void
   abstract translate(dx: number, dy: number): void
+  abstract scale(sx: number, sy: number): void
 
   abstract draw(ctx: CanvasRenderingContext2D, viewport: Viewport): void
 }

@@ -4,6 +4,7 @@ import { Shape, ShapeConfig } from './shape'
 import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
+import { scale } from '@/logic/scale'
 
 export class Dot implements Shape {
   name: string
@@ -24,6 +25,15 @@ export class Dot implements Shape {
     this.coord = translate({
       dx,
       dy,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+    })
+  }
+
+  scale(sx: number, sy: number) {
+    this.coord = scale({
+      sx,
+      sy,
       worldX: this.coord.x,
       worldY: this.coord.y,
     })

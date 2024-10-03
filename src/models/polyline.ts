@@ -4,6 +4,7 @@ import { transformToViewport } from '@/logic/transform-to-viewport'
 import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
+import { scale } from '@/logic/scale'
 
 export class Polyline implements Shape {
   name: string
@@ -24,9 +25,17 @@ export class Polyline implements Shape {
     this.vertices = vertices
   }
 
-  translate(dx: number, dy: number): void {
+  translate(dx: number, dy: number) {
     const vertices = this.vertices.map((vertex) => {
       return translate({ dx, dy, worldX: vertex.x, worldY: vertex.y })
+    })
+
+    this.vertices = vertices
+  }
+
+  scale(sx: number, sy: number) {
+    const vertices = this.vertices.map((vertex) => {
+      return scale({ sx, sy, worldX: vertex.x, worldY: vertex.y })
     })
 
     this.vertices = vertices

@@ -21,8 +21,10 @@ export function EditShapeModal({
   shape,
 }: EditShapeModalProps) {
   const [rotationAngle, setRotationAngle] = useState(0)
-  const [dx, setDx] = useState(0)
-  const [dy, setDy] = useState(0)
+  const [dx, setDx] = useState('')
+  const [dy, setDy] = useState('')
+  const [sx, setSx] = useState('')
+  const [sy, setSy] = useState('')
 
   const { editShapeFromDisplayList } = useDisplayList()
 
@@ -34,9 +36,15 @@ export function EditShapeModal({
     event.preventDefault()
 
     shape.rotate(rotationAngle)
-    shape.translate(dx, dy)
+    shape.translate(dx ? Number(dx) : 0, dy ? Number(dy) : 0)
+    shape.scale(sx ? Number(sx) : 1, sy ? Number(sy) : 1)
 
     editShapeFromDisplayList(shapeIndex, shape)
+
+    setDx('')
+    setDy('')
+    setSx('')
+    setSy('')
 
     handleClose()
   }
@@ -49,6 +57,30 @@ export function EditShapeModal({
 
           <div className="mt-4 gap-4 flex flex-col">
             <div className="space-y-1.5">
+              <Label>Escalonamento</Label>
+
+              <div className="grid grid-cols-2 gap-4">
+                <InputWithLabel
+                  label="Sx"
+                  id="sx"
+                  placeholder="Sx"
+                  type="number"
+                  value={sx}
+                  onChange={(e) => setSx(e.target.value)}
+                />
+
+                <InputWithLabel
+                  label="Sy"
+                  id="sy"
+                  placeholder="Sy"
+                  type="number"
+                  value={sy}
+                  onChange={(e) => setSy(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
               <Label>Translação</Label>
 
               <div className="grid grid-cols-2 gap-4">
@@ -58,7 +90,7 @@ export function EditShapeModal({
                   placeholder="Dx"
                   type="number"
                   value={dx}
-                  onChange={(e) => setDx(Number(e.target.value))}
+                  onChange={(e) => setDx(e.target.value)}
                 />
 
                 <InputWithLabel
@@ -67,7 +99,7 @@ export function EditShapeModal({
                   placeholder="Dy"
                   type="number"
                   value={dy}
-                  onChange={(e) => setDy(Number(e.target.value))}
+                  onChange={(e) => setDy(e.target.value)}
                 />
               </div>
             </div>
