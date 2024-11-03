@@ -1,3 +1,4 @@
+import { Viewport } from '@/models/viewport'
 import {
   createContext,
   ReactNode,
@@ -8,8 +9,6 @@ import {
   useState,
 } from 'react'
 import { Shape } from '../models/shape'
-import { Viewport } from '@/models/viewport'
-import { Matrix } from '@/logic/matrix'
 
 interface DisplayListContextData {
   canvasRef: RefObject<HTMLCanvasElement>
@@ -142,26 +141,6 @@ export function DisplayListContextProvider({
   useEffect(() => {
     drawDisplayList()
   }, [displayList, zoom, offsetX, offsetY]) // eslint-disable-line
-
-  useEffect(() => {
-    const matrix1 = new Matrix([
-      [1, 2, 3],
-      [4, 5, 6],
-    ])
-
-    const matrix2 = new Matrix([
-      [7, 8],
-      [9, 10],
-      [11, 12],
-    ])
-
-    const resultMatrix = matrix1.multiplyByMatrix(matrix2)
-    resultMatrix.print()
-
-    const vector = [1, 2, 3]
-    const resultVector = matrix1.multiplyByVector(vector)
-    console.log(resultVector)
-  }, [])
 
   return (
     <DisplayListContext.Provider

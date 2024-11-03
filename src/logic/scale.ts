@@ -1,3 +1,5 @@
+import { Matrix } from './matrix'
+
 interface ScaleParams {
   worldX: number
   worldY: number
@@ -6,8 +8,15 @@ interface ScaleParams {
 }
 
 export function scale({ worldX, worldY, sx, sy }: ScaleParams) {
-  const scaledX = worldX * sx
-  const scaledY = worldY * sy
+  const scalingMatrix = new Matrix([
+    [sx, 0, 0],
+    [0, sy, 0],
+    [0, 0, 1],
+  ])
 
-  return { x: scaledX, y: scaledY }
+  const pointVector = new Matrix([[worldX], [worldY], [1]])
+
+  const scaledPoint = scalingMatrix.multiplyByMatrix(pointVector)
+
+  return { x: scaledPoint.data[0][0], y: scaledPoint.data[1][0] }
 }
