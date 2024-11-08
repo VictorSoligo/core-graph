@@ -6,6 +6,7 @@ import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
+import { rotateAroundPoint } from '@/logic/rotate-around-point'
 
 export class Dot implements Shape {
   name: string
@@ -20,6 +21,16 @@ export class Dot implements Shape {
 
   rotate(degrees: number) {
     this.coord = rotate({ degrees, worldX: this.coord.x, worldY: this.coord.y })
+  }
+
+  rotateAroundPoint(degrees: number, pivotX: number, pivotY: number) {
+    this.coord = rotateAroundPoint({
+      degrees,
+      pivotX,
+      pivotY,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+    })
   }
 
   translate(dx: number, dy: number) {

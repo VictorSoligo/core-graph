@@ -9,8 +9,15 @@ export abstract class Shape {
   abstract name: string
   abstract config: ShapeConfig
 
-  abstract rotate(degrees: number): void
   abstract translate(dx: number, dy: number): void
+
+  abstract rotate(degrees: number): void
+  abstract rotateAroundPoint(
+    degrees: number,
+    pivotX: number,
+    pivotY: number,
+  ): void
+
   abstract scale(sx: number, sy: number): void
   abstract scaleRelativeToOrigin(sx: number, sy: number): void
 

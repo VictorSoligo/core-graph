@@ -2,7 +2,7 @@ import { Shape } from '@/models/shape'
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from './ui/dialog'
 import { Slider } from './ui/slider'
 import { Button } from './ui/button'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Label } from './ui/label'
 import { useDisplayList } from '@/contexts/display-list-context'
 import { InputWithLabel } from './input-with-label'
@@ -26,7 +26,10 @@ export function EditShapeModal({
   const [dy, setDy] = useState('')
   const [sx, setSx] = useState('')
   const [sy, setSy] = useState('')
+  const [pivotX, setPivotX] = useState('')
+  const [pivotY, setPivotY] = useState('')
   const [scaleRelativeToOrigin, setScaleRelativeToOrigin] = useState(false)
+  const [rotateAroundPoint, setRotateAroundPoint] = useState(false)
 
   const { editShapeFromDisplayList } = useDisplayList()
 
@@ -37,7 +40,6 @@ export function EditShapeModal({
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
 
-    shape.rotate(rotationAngle)
     shape.translate(dx ? Number(dx) : 0, dy ? Number(dy) : 0)
 
     if (scaleRelativeToOrigin) {
@@ -46,15 +48,28 @@ export function EditShapeModal({
       shape.scale(sx ? Number(sx) : 1, sy ? Number(sy) : 1)
     }
 
+    if (rotateAroundPoint) {
+      shape.rotateAroundPoint(rotationAngle, Number(pivotX), Number(pivotY))
+    } else {
+      shape.rotate(rotationAngle)
+    }
+
     editShapeFromDisplayList(shapeIndex, shape)
 
     setDx('')
     setDy('')
     setSx('')
     setSy('')
+    setPivotX('')
+    setPivotY('')
 
     handleClose()
   }
+
+  useEffect(() => {
+    setPivotX('')
+    setPivotY('')
+  }, [rotateAroundPoint])
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -132,10 +147,41 @@ export function EditShapeModal({
               />
 
               <span className="flex justify-center">{rotationAngle}°</span>
+
+              <CheckboxWithLabel
+                id="rotateAroundPoint"
+                label="Rotacionar sobre ponto qualquer"
+                checked={rotateAroundPoint}
+                onCheckedChange={(value: boolean) =>
+                  setRotateAroundPoint(value)
+                }
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <InputWithLabel
+                  label="Pivô X"
+                  id="pivotX"
+                  placeholder="Pivô X"
+                  type="number"
+                  value={pivotX}
+                  onChange={(e) => setPivotX(e.target.value)}
+                  disabled={!rotateAroundPoint}
+                />
+
+                <InputWithLabel
+                  label="Pivô Y"
+                  id="pivotY"
+                  placeholder="Pivô Y"
+                  type="number"
+                  value={pivotY}
+                  onChange={(e) => setPivotY(e.target.value)}
+                  disabled={!rotateAroundPoint}
+                />
+              </div>
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="mt-4">
             <Button type="submit">Salvar</Button>
           </DialogFooter>
         </form>

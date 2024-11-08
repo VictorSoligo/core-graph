@@ -6,6 +6,7 @@ import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
+import { rotateAroundPoint } from '@/logic/rotate-around-point'
 
 export class Polyline implements Shape {
   name: string
@@ -21,6 +22,20 @@ export class Polyline implements Shape {
   rotate(degrees: number) {
     const vertices = this.vertices.map((vertex) => {
       return rotate({ degrees, worldX: vertex.x, worldY: vertex.y })
+    })
+
+    this.vertices = vertices
+  }
+
+  rotateAroundPoint(degrees: number, pivotX: number, pivotY: number) {
+    const vertices = this.vertices.map((vertex) => {
+      return rotateAroundPoint({
+        degrees,
+        pivotX,
+        pivotY,
+        worldX: vertex.x,
+        worldY: vertex.y,
+      })
     })
 
     this.vertices = vertices

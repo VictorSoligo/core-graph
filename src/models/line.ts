@@ -6,6 +6,7 @@ import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
+import { rotateAroundPoint } from '@/logic/rotate-around-point'
 
 export class Line implements Shape {
   name: string
@@ -23,6 +24,24 @@ export class Line implements Shape {
   rotate(degrees: number) {
     this.to = rotate({ degrees, worldX: this.to.x, worldY: this.to.y })
     this.from = rotate({ degrees, worldX: this.from.x, worldY: this.from.y })
+  }
+
+  rotateAroundPoint(degrees: number, pivotX: number, pivotY: number) {
+    this.from = rotateAroundPoint({
+      degrees,
+      pivotX,
+      pivotY,
+      worldX: this.from.x,
+      worldY: this.from.y,
+    })
+
+    this.to = rotateAroundPoint({
+      degrees,
+      pivotX,
+      pivotY,
+      worldX: this.to.x,
+      worldY: this.to.y,
+    })
   }
 
   translate(dx: number, dy: number) {
