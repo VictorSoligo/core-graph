@@ -5,6 +5,7 @@ import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
+import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 
 export class Polyline implements Shape {
   name: string
@@ -36,6 +37,21 @@ export class Polyline implements Shape {
   scale(sx: number, sy: number) {
     const vertices = this.vertices.map((vertex) => {
       return scale({ sx, sy, worldX: vertex.x, worldY: vertex.y })
+    })
+
+    this.vertices = vertices
+  }
+
+  scaleRelativeToOrigin(sx: number, sy: number) {
+    const vertices = this.vertices.map((vertex) => {
+      return scaleRelativeToOrigin({
+        sx,
+        sy,
+        originX: this.vertices[0].x,
+        originY: this.vertices[0].y,
+        worldX: vertex.x,
+        worldY: vertex.y,
+      })
     })
 
     this.vertices = vertices

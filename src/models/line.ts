@@ -5,6 +5,7 @@ import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
+import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 
 export class Line implements Shape {
   name: string
@@ -32,6 +33,29 @@ export class Line implements Shape {
   scale(sx: number, sy: number) {
     this.to = scale({ sx, sy, worldX: this.to.x, worldY: this.to.y })
     this.from = scale({ sx, sy, worldX: this.from.x, worldY: this.from.y })
+  }
+
+  scaleRelativeToOrigin(sx: number, sy: number) {
+    const originX = this.from.x
+    const originY = this.from.y
+
+    this.from = scaleRelativeToOrigin({
+      sx,
+      sy,
+      originX,
+      originY,
+      worldX: this.from.x,
+      worldY: this.from.y,
+    })
+
+    this.to = scaleRelativeToOrigin({
+      sx,
+      sy,
+      originX,
+      originY,
+      worldX: this.to.x,
+      worldY: this.to.y,
+    })
   }
 
   draw(ctx: CanvasRenderingContext2D, viewport: Viewport) {

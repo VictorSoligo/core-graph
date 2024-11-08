@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react'
 import { Label } from './ui/label'
 import { useDisplayList } from '@/contexts/display-list-context'
 import { InputWithLabel } from './input-with-label'
+import { CheckboxWithLabel } from './checkbox-with-label'
 
 interface EditShapeModalProps {
   shape: Shape
@@ -25,6 +26,7 @@ export function EditShapeModal({
   const [dy, setDy] = useState('')
   const [sx, setSx] = useState('')
   const [sy, setSy] = useState('')
+  const [scaleRelativeToOrigin, setScaleRelativeToOrigin] = useState(false)
 
   const { editShapeFromDisplayList } = useDisplayList()
 
@@ -37,7 +39,12 @@ export function EditShapeModal({
 
     shape.rotate(rotationAngle)
     shape.translate(dx ? Number(dx) : 0, dy ? Number(dy) : 0)
-    shape.scale(sx ? Number(sx) : 1, sy ? Number(sy) : 1)
+
+    if (scaleRelativeToOrigin) {
+      shape.scaleRelativeToOrigin(sx ? Number(sx) : 1, sy ? Number(sy) : 1)
+    } else {
+      shape.scale(sx ? Number(sx) : 1, sy ? Number(sy) : 1)
+    }
 
     editShapeFromDisplayList(shapeIndex, shape)
 
@@ -56,7 +63,7 @@ export function EditShapeModal({
           <DialogTitle>Editar objeto {shape.name}</DialogTitle>
 
           <div className="mt-4 gap-4 flex flex-col">
-            <div className="space-y-1.5">
+            <div className="space-y-4">
               <Label>Escalonamento</Label>
 
               <div className="grid grid-cols-2 gap-4">
@@ -78,9 +85,18 @@ export function EditShapeModal({
                   onChange={(e) => setSy(e.target.value)}
                 />
               </div>
+
+              <CheckboxWithLabel
+                id="scaleRelativeToOrigin"
+                label="Em relação à origem"
+                checked={scaleRelativeToOrigin}
+                onCheckedChange={(value: boolean) =>
+                  setScaleRelativeToOrigin(value)
+                }
+              />
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-4">
               <Label>Translação</Label>
 
               <div className="grid grid-cols-2 gap-4">
@@ -104,7 +120,7 @@ export function EditShapeModal({
               </div>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-4">
               <Label>Rotação</Label>
 
               <Slider

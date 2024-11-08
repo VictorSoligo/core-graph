@@ -5,6 +5,7 @@ import { Viewport } from './viewport'
 import { rotate } from '@/logic/rotate'
 import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
+import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 
 export class Dot implements Shape {
   name: string
@@ -34,6 +35,17 @@ export class Dot implements Shape {
     this.coord = scale({
       sx,
       sy,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+    })
+  }
+
+  scaleRelativeToOrigin(sx: number, sy: number) {
+    this.coord = scaleRelativeToOrigin({
+      sx,
+      sy,
+      originX: this.coord.x,
+      originY: this.coord.y,
       worldX: this.coord.x,
       worldY: this.coord.y,
     })
