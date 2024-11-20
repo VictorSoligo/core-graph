@@ -100,6 +100,28 @@ export class Line implements Shape {
     })
   }
 
+  scaleRelativeToCenter(sx: number, sy: number) {
+    const { x, y } = calculateCentroid([this.to, this.from])
+
+    this.from = scaleRelativeToOrigin({
+      sx,
+      sy,
+      originX: x,
+      originY: y,
+      worldX: this.from.x,
+      worldY: this.from.y,
+    })
+
+    this.to = scaleRelativeToOrigin({
+      sx,
+      sy,
+      originX: x,
+      originY: y,
+      worldX: this.to.x,
+      worldY: this.to.y,
+    })
+  }
+
   reflect({ x, y }: { x: boolean; y: boolean }) {
     this.to = reflect({
       reflectX: x,

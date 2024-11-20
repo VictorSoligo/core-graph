@@ -77,6 +77,19 @@ export class Dot implements Shape {
     })
   }
 
+  scaleRelativeToCenter(sx: number, sy: number) {
+    const { x, y } = calculateCentroid([this.coord])
+
+    this.coord = scaleRelativeToOrigin({
+      sx,
+      sy,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+      originX: x,
+      originY: y,
+    })
+  }
+
   reflect({ x, y }: { x: boolean; y: boolean }) {
     this.coord = reflect({
       reflectX: x,

@@ -91,6 +91,23 @@ export class Polygon implements Shape {
     this.vertices = vertices
   }
 
+  scaleRelativeToCenter(sx: number, sy: number) {
+    const { x, y } = calculateCentroid(this.vertices)
+
+    const vertices = this.vertices.map((vertex) => {
+      return scaleRelativeToOrigin({
+        sx,
+        sy,
+        originX: x,
+        originY: y,
+        worldX: vertex.x,
+        worldY: vertex.y,
+      })
+    })
+
+    this.vertices = vertices
+  }
+
   reflect({ x, y }: { x: boolean; y: boolean }) {
     const vertices = this.vertices.map((vertex) => {
       return reflect({
