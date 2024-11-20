@@ -12,6 +12,7 @@ export abstract class Shape {
   abstract translate(dx: number, dy: number): void
 
   abstract rotate(degrees: number): void
+  abstract rotateAroundCenter(degrees: number): void
   abstract rotateAroundPoint(
     degrees: number,
     pivotX: number,

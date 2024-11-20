@@ -9,6 +9,7 @@ import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
 import { reflect } from '@/logic/reflect'
 import { shear } from '@/logic/shear'
+import { calculateCentroid } from '@/logic/calculate-centroid'
 
 export class Line implements Shape {
   name: string
@@ -29,6 +30,26 @@ export class Line implements Shape {
   }
 
   rotateAroundPoint(degrees: number, pivotX: number, pivotY: number) {
+    this.from = rotateAroundPoint({
+      degrees,
+      pivotX,
+      pivotY,
+      worldX: this.from.x,
+      worldY: this.from.y,
+    })
+
+    this.to = rotateAroundPoint({
+      degrees,
+      pivotX,
+      pivotY,
+      worldX: this.to.x,
+      worldY: this.to.y,
+    })
+  }
+
+  rotateAroundCenter(degrees: number) {
+    const { x: pivotX, y: pivotY } = calculateCentroid([this.from, this.to])
+
     this.from = rotateAroundPoint({
       degrees,
       pivotX,

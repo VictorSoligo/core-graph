@@ -9,6 +9,7 @@ import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
 import { reflect } from '@/logic/reflect'
 import { shear } from '@/logic/shear'
+import { calculateCentroid } from '@/logic/calculate-centroid'
 
 export class Polyline implements Shape {
   name: string
@@ -30,6 +31,22 @@ export class Polyline implements Shape {
   }
 
   rotateAroundPoint(degrees: number, pivotX: number, pivotY: number) {
+    const vertices = this.vertices.map((vertex) => {
+      return rotateAroundPoint({
+        degrees,
+        pivotX,
+        pivotY,
+        worldX: vertex.x,
+        worldY: vertex.y,
+      })
+    })
+
+    this.vertices = vertices
+  }
+
+  rotateAroundCenter(degrees: number) {
+    const { x: pivotX, y: pivotY } = calculateCentroid(this.vertices)
+
     const vertices = this.vertices.map((vertex) => {
       return rotateAroundPoint({
         degrees,
