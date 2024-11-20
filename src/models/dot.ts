@@ -8,6 +8,7 @@ import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
 import { reflect } from '@/logic/reflect'
+import { shear } from '@/logic/shear'
 
 export class Dot implements Shape {
   name: string
@@ -67,6 +68,15 @@ export class Dot implements Shape {
     this.coord = reflect({
       reflectX: x,
       reflectY: y,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+    })
+  }
+
+  shear(shX: number, shY: number) {
+    this.coord = shear({
+      gammaX: shX,
+      gammaY: shY,
       worldX: this.coord.x,
       worldY: this.coord.y,
     })

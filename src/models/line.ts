@@ -8,6 +8,7 @@ import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
 import { reflect } from '@/logic/reflect'
+import { shear } from '@/logic/shear'
 
 export class Line implements Shape {
   name: string
@@ -91,6 +92,22 @@ export class Line implements Shape {
       reflectY: y,
       worldX: this.from.x,
       worldY: this.from.y,
+    })
+  }
+
+  shear(shX: number, shY: number) {
+    this.from = shear({
+      gammaX: shX,
+      gammaY: shY,
+      worldX: this.from.x,
+      worldY: this.from.y,
+    })
+
+    this.to = shear({
+      gammaX: shX,
+      gammaY: shY,
+      worldX: this.to.x,
+      worldY: this.to.y,
     })
   }
 

@@ -5,6 +5,7 @@ import { Dialog, DialogContent } from './ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 import { TranslationTab } from './translation-tab'
 import { ReflectionTab } from './reflection-tab'
+import { ShearingTab } from './shearing-tab'
 
 interface EditShapeModalProps {
   shape: Shape
@@ -25,14 +26,23 @@ export function EditShapeModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <Tabs defaultValue="scale">
+      <DialogContent className="max-w-xl">
+        <Tabs defaultValue="shearing">
           <TabsList>
+            <TabsTrigger value="shearing">Cisalhamento</TabsTrigger>
             <TabsTrigger value="scale">Escalonamento</TabsTrigger>
-            <TabsTrigger value="rotation">Rotação</TabsTrigger>
             <TabsTrigger value="reflection">Reflexão</TabsTrigger>
+            <TabsTrigger value="rotation">Rotação</TabsTrigger>
             <TabsTrigger value="translation">Translação</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="shearing">
+            <ShearingTab
+              shape={shape}
+              shapeIndex={shapeIndex}
+              onClose={handleClose}
+            />
+          </TabsContent>
 
           <TabsContent value="scale">
             <ScaleTab

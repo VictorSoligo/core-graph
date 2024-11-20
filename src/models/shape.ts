@@ -23,5 +23,7 @@ export abstract class Shape {
 
   abstract reflect(axes: { x: boolean; y: boolean }): void
 
+  abstract shear(shX: number, shY: number): void
+
   abstract draw(ctx: CanvasRenderingContext2D, viewport: Viewport): void
 }

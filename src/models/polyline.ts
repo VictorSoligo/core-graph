@@ -8,6 +8,7 @@ import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
 import { reflect } from '@/logic/reflect'
+import { shear } from '@/logic/shear'
 
 export class Polyline implements Shape {
   name: string
@@ -78,6 +79,19 @@ export class Polyline implements Shape {
       return reflect({
         reflectX: x,
         reflectY: y,
+        worldX: vertex.x,
+        worldY: vertex.y,
+      })
+    })
+
+    this.vertices = vertices
+  }
+
+  shear(shX: number, shY: number) {
+    const vertices = this.vertices.map((vertex) => {
+      return shear({
+        gammaX: shX,
+        gammaY: shY,
         worldX: vertex.x,
         worldY: vertex.y,
       })
