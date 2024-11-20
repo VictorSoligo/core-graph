@@ -7,6 +7,7 @@ import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
+import { reflect } from '@/logic/reflect'
 
 export class Line implements Shape {
   name: string
@@ -74,6 +75,22 @@ export class Line implements Shape {
       originY,
       worldX: this.to.x,
       worldY: this.to.y,
+    })
+  }
+
+  reflect({ x, y }: { x: boolean; y: boolean }) {
+    this.to = reflect({
+      reflectX: x,
+      reflectY: y,
+      worldX: this.to.x,
+      worldY: this.to.y,
+    })
+
+    this.from = reflect({
+      reflectX: x,
+      reflectY: y,
+      worldX: this.from.x,
+      worldY: this.from.y,
     })
   }
 

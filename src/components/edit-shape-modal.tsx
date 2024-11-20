@@ -4,6 +4,7 @@ import { ScaleTab } from './scale-tab'
 import { Dialog, DialogContent } from './ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 import { TranslationTab } from './translation-tab'
+import { ReflectionTab } from './reflection-tab'
 
 interface EditShapeModalProps {
   shape: Shape
@@ -29,6 +30,7 @@ export function EditShapeModal({
           <TabsList>
             <TabsTrigger value="scale">Escalonamento</TabsTrigger>
             <TabsTrigger value="rotation">Rotação</TabsTrigger>
+            <TabsTrigger value="reflection">Reflexão</TabsTrigger>
             <TabsTrigger value="translation">Translação</TabsTrigger>
           </TabsList>
 
@@ -42,6 +44,14 @@ export function EditShapeModal({
 
           <TabsContent value="rotation">
             <RotationTab
+              shape={shape}
+              shapeIndex={shapeIndex}
+              onClose={handleClose}
+            />
+          </TabsContent>
+
+          <TabsContent value="reflection">
+            <ReflectionTab
               shape={shape}
               shapeIndex={shapeIndex}
               onClose={handleClose}

@@ -21,5 +21,7 @@ export abstract class Shape {
   abstract scale(sx: number, sy: number): void
   abstract scaleRelativeToOrigin(sx: number, sy: number): void
 
+  abstract reflect(axes: { x: boolean; y: boolean }): void
+
   abstract draw(ctx: CanvasRenderingContext2D, viewport: Viewport): void
 }

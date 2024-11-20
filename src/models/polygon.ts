@@ -7,6 +7,7 @@ import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
+import { reflect } from '@/logic/reflect'
 
 export class Polygon implements Shape {
   name: string
@@ -64,6 +65,19 @@ export class Polygon implements Shape {
         sy,
         originX: this.vertices[0].x,
         originY: this.vertices[0].y,
+        worldX: vertex.x,
+        worldY: vertex.y,
+      })
+    })
+
+    this.vertices = vertices
+  }
+
+  reflect({ x, y }: { x: boolean; y: boolean }) {
+    const vertices = this.vertices.map((vertex) => {
+      return reflect({
+        reflectX: x,
+        reflectY: y,
         worldX: vertex.x,
         worldY: vertex.y,
       })

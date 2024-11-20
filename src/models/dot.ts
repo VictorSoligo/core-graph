@@ -7,6 +7,7 @@ import { translate } from '@/logic/translate'
 import { scale } from '@/logic/scale'
 import { scaleRelativeToOrigin } from '@/logic/scale-relative-to-origin'
 import { rotateAroundPoint } from '@/logic/rotate-around-point'
+import { reflect } from '@/logic/reflect'
 
 export class Dot implements Shape {
   name: string
@@ -57,6 +58,15 @@ export class Dot implements Shape {
       sy,
       originX: this.coord.x,
       originY: this.coord.y,
+      worldX: this.coord.x,
+      worldY: this.coord.y,
+    })
+  }
+
+  reflect({ x, y }: { x: boolean; y: boolean }) {
+    this.coord = reflect({
+      reflectX: x,
+      reflectY: y,
       worldX: this.coord.x,
       worldY: this.coord.y,
     })
